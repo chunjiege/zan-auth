@@ -1,18 +1,14 @@
 package com.zan.hu.test;
 
-import org.apache.commons.fileupload.disk.DiskFileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.util.List;
 
 /**
  * @version 1.0
@@ -28,19 +24,13 @@ public class TestController {
     private FileService fileService;
 
     @PostMapping
-    public String singleFileUpload(MultipartFile file) {
-        MultipartFile multi = null;
-        try {
-            DiskFileItem fileItem = (DiskFileItem) new DiskFileItemFactory().createItem("file",
-                    MediaType.ALL_VALUE, true, file.getOriginalFilename());
-            InputStream input = file.getInputStream();
-            OutputStream os = fileItem.getOutputStream();
-            IOUtils.copy(input, os);
-            multi = new CommonsMultipartFile(fileItem);
-        } catch (Exception e) {
+    public String singleUpload(@RequestPart(value = "file") MultipartFile file) {
+        return fileService.singleUpload(file);
+    }
 
-        }
-        return fileService.handleFileUpload(multi);
+    @PostMapping("/multi")
+    public List<String> singleUpload(@RequestParam(value = "files") MultipartFile[] files) {
+        return fileService.multiUpload(files);
     }
 
 }
