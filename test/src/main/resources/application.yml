@@ -1,0 +1,10 @@
+security:
+  jwt:
+    public-key: classpath:public.txt
+server:
+  port: 9100
+
+spring:
+  jackson:
+    serialization:
+      INDENT_OUTPUT: true
