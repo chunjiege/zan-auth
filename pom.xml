@@ -9,7 +9,8 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>auth-core</module>
-        <module>test</module>
+        <module>auth-model</module>
+        <module>auth-api</module>
     </modules>
 
     <repositories>

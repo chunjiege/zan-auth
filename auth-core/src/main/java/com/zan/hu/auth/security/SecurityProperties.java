@@ -18,9 +18,9 @@ public class SecurityProperties {
 
     @Data
     public static class JwtProperties {
-        private Resource keyStore;
         private String keyStorePassword;
         private String keyPairAlias;
         private String keyPairPassword;
+        private Resource keyStore;
     }
 }

@@ -1,9 +1,9 @@
 security:
   jwt:
-    key-store: classpath:keystore.jks
-    key-store-password: letmein
-    key-pair-alias: mytestkey
-    key-pair-password: changeme
+    key-store: classpath:auth-jwt.jks
+    key-store-password: followme
+    key-pair-alias: auth-jwt
+    key-pair-password: followme
 server:
   port: 9000
 
@@ -11,3 +11,29 @@ spring:
   jackson:
     serialization:
       INDENT_OUTPUT: true
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://118.31.20.148:3306/juhai?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&allowMultiQueries=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    host: 118.31.20.148
+    port: 6378
+  application:
+    name: auth-service
+#mybatis
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+logging:
+  level:
+    com.zan.hu: debug

@@ -1,16 +1,16 @@
 package com.zan.hu.auth.security;
 
+import com.zan.hu.auth.userdetails.UserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import javax.sql.DataSource;
 
 /**
  * @version 1.0
@@ -19,20 +19,17 @@ import javax.sql.DataSource;
  * @Description todo
  **/
 @EnableWebSecurity
+@Order(SecurityProperties.BASIC_AUTH_ORDER)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final DataSource dataSource;
-
     private PasswordEncoder passwordEncoder;
-    private UserDetailsService userDetailsService;
 
-    public WebSecurityConfiguration(final DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService())
+        auth.userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
 
@@ -50,20 +47,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         return passwordEncoder;
     }
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        if (userDetailsService == null) {
-            userDetailsService = new JdbcDaoImpl();
-            ((JdbcDaoImpl) userDetailsService).setDataSource(dataSource);
-        }
-        return userDetailsService;
-    }
-
-//    public static void main(String[] args) {
-//        PasswordEncoder delegatingPasswordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-//        String encode = delegatingPasswordEncoder.encode("user");
-//
-//        //String encode = delegatingPasswordEncoder.encode("$2a$10$cyf5NfobcruKQ8XGjUJkEegr9ZWFqaea6vjpXWEaSqTa2xL9wjgQC");
-//        System.out.println(encode);
+//    @Override
+//    public void configure(HttpSecurity http) throws Exception {
+//        http.csrf().disable();
+//        http.requestMatchers().antMatchers("/oauth/**").and().authorizeRequests()
+//                .antMatchers("/oauth/**").authenticated().and().formLogin().permitAll();
 //    }
+//
 }
