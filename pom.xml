@@ -11,6 +11,7 @@
         <module>auth-core</module>
         <module>auth-model</module>
         <module>auth-api</module>
+        <module>auth-sample</module>
     </modules>
 
     <repositories>

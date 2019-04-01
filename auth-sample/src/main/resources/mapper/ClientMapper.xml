@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zan.hu.sample.mapper.ClientMapper">
+    <resultMap id="BaseResultMap" type="com.zan.hu.auth.domin.Client">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="client_id" jdbcType="VARCHAR" property="clientId"/>
+        <result column="client_secret" jdbcType="VARCHAR" property="clientSecret"/>
+        <result column="resource_ids" jdbcType="VARCHAR" property="resourceIds"/>
+        <result column="scope" jdbcType="VARCHAR" property="scope"/>
+        <result column="authorized_grant_types" jdbcType="VARCHAR" property="authorizedGrantTypes"/>
+        <result column="authorities" jdbcType="VARCHAR" property="authorities"/>
+        <result column="access_token_validity" jdbcType="INTEGER" property="accessTokenValidity"/>
+        <result column="refresh_token_validity" jdbcType="INTEGER" property="refreshTokenValidity"/>
+        <result column="autoapprove" jdbcType="VARCHAR" property="autoapprove"/>
+        <result column="enabled" jdbcType="BIT" property="enabled"/>
+        <result column="created_at" jdbcType="TIMESTAMP" property="createdAt"/>
+        <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, client_id, client_secret, resource_ids, `scope`, authorized_grant_types, authorities,
+    access_token_validity, refresh_token_validity, autoapprove, enabled, created_at,
+    updated_at
+  </sql>
+
+
+    <select id="selectByClientId" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from client
+        where client_id = #{clientId}
+    </select>
+</mapper>
