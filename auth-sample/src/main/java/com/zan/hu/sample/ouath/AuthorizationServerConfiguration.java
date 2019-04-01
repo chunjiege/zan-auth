@@ -1,9 +1,11 @@
 package com.zan.hu.sample.ouath;
 
+import com.zan.hu.sample.config.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -11,8 +13,14 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
+
+import java.security.KeyPair;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @version 1.0
@@ -22,8 +30,8 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
  **/
 @Configuration
 @EnableAuthorizationServer
+@EnableConfigurationProperties(SecurityProperties.class)
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
-
     //注入权限验证控制器 来支持 password grant type
     @Autowired
     AuthenticationManager authenticationManager;
@@ -34,6 +42,17 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Autowired
     private ClientDetailsServiceImpl clientDetailsService;
 
+    private SecurityProperties securityProperties;
+
+    public AuthorizationServerConfiguration(SecurityProperties securityProperties) {
+        this.securityProperties = securityProperties;
+    }
+
+    @Bean
+    public TokenStore tokenStore() {
+        return new JwtTokenStore(jwtAccessTokenConverter());
+    }
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.withClientDetails(clientDetailsService);
@@ -42,9 +61,18 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints
-                .tokenStore(tokenStore)
+                .tokenStore(tokenStore).tokenEnhancer(jwtAccessTokenConverter())
                 .authenticationManager(authenticationManager)
                 .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
+
+        // 配置tokenServices参数
+        DefaultTokenServices tokenServices = new DefaultTokenServices();
+        tokenServices.setTokenStore(endpoints.getTokenStore());
+        tokenServices.setSupportRefreshToken(false);
+        tokenServices.setClientDetailsService(endpoints.getClientDetailsService());
+        tokenServices.setTokenEnhancer(endpoints.getTokenEnhancer());
+        tokenServices.setAccessTokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(30)); // 30天
+        endpoints.tokenServices(tokenServices);
     }
 
     @Override
@@ -55,12 +83,23 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 .allowFormAuthenticationForClients();
     }
 
-    @Configuration
-    protected static class RelatedConfiguration {
-        @Bean
-        public TokenStore tokenStore(RedisConnectionFactory connectionFactory) {
-            RedisTokenStore redisTokenStore = new RedisTokenStore(connectionFactory);
-            return redisTokenStore;
-        }
+
+    @Bean
+    public JwtAccessTokenConverter jwtAccessTokenConverter() {
+        //KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(securityProperties.getJwt().getKeyStore(), securityProperties.getJwt().getKeyStorePassword().toCharArray());
+        KeyStoreKeyFactory keyStoreKeyFactory = keyStoreKeyFactory(securityProperties.getJwt());
+        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        KeyPair keyPair = keyPair(securityProperties.getJwt(), keyStoreKeyFactory);
+        //keyStoreKeyFactory.getKeyPair(securityProperties.getJwt().getKeyPairAlias())
+        converter.setKeyPair(keyPair);
+        return converter;
+    }
+
+    private KeyPair keyPair(SecurityProperties.JwtProperties jwtProperties, KeyStoreKeyFactory keyStoreKeyFactory) {
+        return keyStoreKeyFactory.getKeyPair(jwtProperties.getKeyPairAlias());
+    }
+
+    private KeyStoreKeyFactory keyStoreKeyFactory(SecurityProperties.JwtProperties jwtProperties) {
+        return new KeyStoreKeyFactory(jwtProperties.getKeyStore(), jwtProperties.getKeyStorePassword().toCharArray());
     }
 }
