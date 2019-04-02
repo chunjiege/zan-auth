@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -86,11 +85,9 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
-        //KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(securityProperties.getJwt().getKeyStore(), securityProperties.getJwt().getKeyStorePassword().toCharArray());
         KeyStoreKeyFactory keyStoreKeyFactory = keyStoreKeyFactory(securityProperties.getJwt());
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         KeyPair keyPair = keyPair(securityProperties.getJwt(), keyStoreKeyFactory);
-        //keyStoreKeyFactory.getKeyPair(securityProperties.getJwt().getKeyPairAlias())
         converter.setKeyPair(keyPair);
         return converter;
     }

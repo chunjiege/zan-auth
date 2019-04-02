@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="/com/zan/hu/auth/mapper.ClientMapper">
+<mapper namespace="com.zan.hu.sample.mapper.ClientMapper">
     <resultMap id="BaseResultMap" type="com.zan.hu.auth.domin.Client">
         <!--
           WARNING - @mbg.generated
