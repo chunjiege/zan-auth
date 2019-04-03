@@ -8,10 +8,8 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>auth-core</module>
         <module>auth-model</module>
-        <module>auth-api</module>
-        <module>auth-sample</module>
+        <module>auth-redis</module>
     </modules>
 
     <repositories>

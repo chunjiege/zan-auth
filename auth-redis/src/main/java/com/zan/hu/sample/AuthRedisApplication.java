@@ -12,8 +12,8 @@ import tk.mybatis.spring.annotation.MapperScan;
  **/
 @SpringBootApplication
 @MapperScan("com.zan.hu.sample.mapper")
-public class SampleApplication {
+public class AuthRedisApplication {
     public static void main(String[] args) {
-        SpringApplication.run(SampleApplication.class, args);
+        SpringApplication.run(AuthRedisApplication.class, args);
     }
 }
