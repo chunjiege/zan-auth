@@ -1,4 +1,4 @@
-package com.zan.hu.sample.userdetails;
+package com.zan.hu.auth.userdetails;
 
 import com.zan.hu.auth.domin.GlobalUser;
 import lombok.Data;

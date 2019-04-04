@@ -1,4 +1,4 @@
-package com.zan.hu.sample.mapper;
+package com.zan.hu.auth.mapper;
 
 import com.zan.hu.auth.domin.GlobalUser;
 import tk.mybatis.mapper.common.Mapper;

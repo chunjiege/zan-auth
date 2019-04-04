@@ -1,6 +1,7 @@
-package com.zan.hu.sample.ouath;
+package com.zan.hu.auth.ouath;
 
-import com.zan.hu.sample.config.SecurityProperties;
+import com.zan.hu.auth.config.SecurityProperties;
+import com.zan.hu.auth.userdetails.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +20,6 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
 import java.security.KeyPair;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @version 1.0
@@ -40,6 +40,9 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     @Autowired
     private ClientDetailsServiceImpl clientDetailsService;
+
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
 
     private SecurityProperties securityProperties;
 
@@ -62,15 +65,16 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         endpoints
                 .tokenStore(tokenStore).tokenEnhancer(jwtAccessTokenConverter())
                 .authenticationManager(authenticationManager)
-                .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
-
+                .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST)
+                .userDetailsService(userDetailsService);
         // 配置tokenServices参数
         DefaultTokenServices tokenServices = new DefaultTokenServices();
         tokenServices.setTokenStore(endpoints.getTokenStore());
         tokenServices.setSupportRefreshToken(false);
-        tokenServices.setClientDetailsService(endpoints.getClientDetailsService());
+        tokenServices.setClientDetailsService(clientDetailsService);
+        //tokenServices.setClientDetailsService(endpoints.getClientDetailsService());
         tokenServices.setTokenEnhancer(endpoints.getTokenEnhancer());
-        tokenServices.setAccessTokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(30)); // 30天
+        //tokenServices.setAccessTokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(30)); // 30天
         endpoints.tokenServices(tokenServices);
     }
 

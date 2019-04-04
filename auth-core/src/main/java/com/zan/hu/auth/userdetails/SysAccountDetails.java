@@ -1,4 +1,4 @@
-package com.zan.hu.sample.userdetails;
+package com.zan.hu.auth.userdetails;
 
 import org.springframework.security.core.userdetails.UserDetails;
 

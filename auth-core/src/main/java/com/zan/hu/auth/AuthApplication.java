@@ -1,7 +1,6 @@
-package com.zan.hu.sample;
+package com.zan.hu.auth;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 import tk.mybatis.spring.annotation.MapperScan;
 
@@ -12,9 +11,9 @@ import tk.mybatis.spring.annotation.MapperScan;
  * @Description todo
  **/
 @SpringCloudApplication
-@MapperScan("com.zan.hu.sample.mapper")
-public class SampleApplication {
+@MapperScan("com.zan.hu.auth.mapper")
+public class AuthApplication {
     public static void main(String[] args) {
-        SpringApplication.run(SampleApplication.class, args);
+        SpringApplication.run(AuthApplication.class, args);
     }
 }

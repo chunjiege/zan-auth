@@ -1,4 +1,4 @@
-package com.zan.hu.sample.ouath;
+package com.zan.hu.auth.ouath;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;

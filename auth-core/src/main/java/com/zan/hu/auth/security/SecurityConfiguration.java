@@ -1,6 +1,6 @@
-package com.zan.hu.sample.security;
+package com.zan.hu.auth.security;
 
-import com.zan.hu.sample.userdetails.UserDetailsServiceImpl;
+import com.zan.hu.auth.userdetails.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

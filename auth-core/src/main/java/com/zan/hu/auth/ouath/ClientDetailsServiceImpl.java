@@ -1,7 +1,7 @@
-package com.zan.hu.sample.ouath;
+package com.zan.hu.auth.ouath;
 
 import com.zan.hu.auth.domin.Client;
-import com.zan.hu.sample.mapper.ClientMapper;
+import com.zan.hu.auth.mapper.ClientMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.oauth2.provider.ClientDetails;

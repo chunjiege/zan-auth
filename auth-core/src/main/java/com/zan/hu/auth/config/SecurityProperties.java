@@ -1,4 +1,4 @@
-package com.zan.hu.sample.config;
+package com.zan.hu.auth.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
