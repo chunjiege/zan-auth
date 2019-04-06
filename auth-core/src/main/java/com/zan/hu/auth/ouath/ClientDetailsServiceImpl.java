@@ -1,5 +1,6 @@
 package com.zan.hu.auth.ouath;
 
+import com.zan.hu.auth.config.ClientDetailsHolder;
 import com.zan.hu.auth.domin.Client;
 import com.zan.hu.auth.mapper.ClientMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,7 @@ public class ClientDetailsServiceImpl implements ClientDetailsService {
         if (StringUtils.hasText(client.getAuthorities())) {
             clientDetails.setAuthorities(AuthorityUtils.commaSeparatedStringToAuthorityList(client.getAuthorities()));
         }
+        ClientDetailsHolder.set(clientDetails);
         return clientDetails;
     }
 }
