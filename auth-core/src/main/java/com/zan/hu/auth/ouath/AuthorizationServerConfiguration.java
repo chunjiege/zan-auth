@@ -70,7 +70,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         // 配置tokenServices参数
         DefaultTokenServices tokenServices = new DefaultTokenServices();
         tokenServices.setTokenStore(endpoints.getTokenStore());
-        tokenServices.setSupportRefreshToken(false);
+        tokenServices.setSupportRefreshToken(true);
         tokenServices.setClientDetailsService(clientDetailsService);
         //tokenServices.setClientDetailsService(endpoints.getClientDetailsService());
         tokenServices.setTokenEnhancer(endpoints.getTokenEnhancer());
@@ -90,8 +90,8 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         KeyStoreKeyFactory keyStoreKeyFactory = keyStoreKeyFactory(securityProperties.getJwt());
-        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         KeyPair keyPair = keyPair(securityProperties.getJwt(), keyStoreKeyFactory);
+        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setKeyPair(keyPair);
         return converter;
     }
