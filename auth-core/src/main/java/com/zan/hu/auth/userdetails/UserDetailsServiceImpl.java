@@ -1,6 +1,6 @@
 package com.zan.hu.auth.userdetails;
 
-import com.zan.hu.auth.domin.GlobalUser;
+import com.zan.hu.auth.domain.GlobalUser;
 import com.zan.hu.auth.mapper.GlobalUserMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

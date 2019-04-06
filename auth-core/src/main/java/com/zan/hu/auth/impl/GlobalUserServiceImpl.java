@@ -2,7 +2,7 @@ package com.zan.hu.auth.impl;
 
 import com.zan.hu.auth.GlobalUserService;
 import com.zan.hu.auth.SysGlobalUser;
-import com.zan.hu.auth.domin.GlobalUser;
+import com.zan.hu.auth.domain.GlobalUser;
 import com.zan.hu.auth.mapper.GlobalUserMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

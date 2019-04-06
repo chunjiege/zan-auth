@@ -1,4 +1,4 @@
-package com.zan.hu.auth.domin;
+package com.zan.hu.auth.domain;
 
 import java.io.Serializable;
 import java.util.Date;

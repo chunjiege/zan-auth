@@ -2,7 +2,7 @@ package com.zan.hu.auth.impl;
 
 import com.zan.hu.auth.ClientService;
 import com.zan.hu.auth.SysClient;
-import com.zan.hu.auth.domin.Client;
+import com.zan.hu.auth.domain.Client;
 import com.zan.hu.auth.mapper.ClientMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
