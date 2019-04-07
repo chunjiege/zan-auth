@@ -1,4 +1,4 @@
-package com.zan.hu.auth.ouath;
+package com.zan.hu.auth.oauth;
 
 import com.zan.hu.auth.config.SecurityProperties;
 import com.zan.hu.auth.userdetails.SysAccount;
