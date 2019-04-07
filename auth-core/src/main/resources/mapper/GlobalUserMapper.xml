@@ -9,6 +9,9 @@
     <result column="guid" jdbcType="VARCHAR" property="guid" />
     <result column="account" jdbcType="VARCHAR" property="account" />
     <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="access_token" jdbcType="VARCHAR" property="accessToken"/>
+    <result column="refresh_token" jdbcType="VARCHAR" property="refreshToken"/>
+    <result column="expires_in" jdbcType="TIMESTAMP" property="expiresIn"/>
     <result column="locked" jdbcType="BIT" property="locked" />
     <result column="enabled" jdbcType="BIT" property="enabled" />
     <result column="expired" jdbcType="BIT" property="expired" />
@@ -17,7 +20,7 @@
   </resultMap>
 
   <sql id="Base_Column_List">
-    id, guid,account, `password`, locked, enabled, expired, created_at,
+    id, guid,account, `password`,access_token,refresh_token,expires_in, locked, enabled, expired, created_at,
     updated_at
   </sql>
 

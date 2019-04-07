@@ -1,7 +1,5 @@
 package com.zan.hu.auth.ouath;
 
-import com.alibaba.fastjson.JSON;
-import com.zan.hu.auth.config.EnhanceRedisTokenStore;
 import com.zan.hu.auth.config.SecurityProperties;
 import com.zan.hu.auth.userdetails.SysAccount;
 import com.zan.hu.auth.userdetails.UserDetailsServiceImpl;
@@ -9,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
@@ -23,8 +20,8 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
-import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 import java.security.KeyPair;
 import java.util.HashMap;
@@ -57,6 +54,11 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     public AuthorizationServerConfiguration(SecurityProperties securityProperties) {
         this.securityProperties = securityProperties;
+    }
+
+    @Bean
+    public TokenStore tokenStore() {
+        return new JwtTokenStore(jwtAccessTokenConverter());
     }
 
 
@@ -111,9 +113,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 // 得到用户名，去处理数据库可以拿到当前用户的信息和角色信息（需要传递到服务中用到的信息）
                 final Map<String, Object> additionalAccountInfo = new HashMap<>();
                 additionalAccountInfo.put("guid", sysAccount.getUserGuid());
-//                Map<String, String> accountInfo = new HashMap<>();
-//                accountInfo.put("guid", sysAccount.getUserGuid());
-//                additionalAccountInfo.put("additionalAccountInfo", JSON.toJSONString(additionalAccountInfo));
+                additionalAccountInfo.put("id", sysAccount.getId());
                 ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalAccountInfo);
                 OAuth2AccessToken enhancedToken = super.enhance(accessToken, authentication);
                 return enhancedToken;
@@ -132,13 +132,13 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
 
     // @Autowired TokenStore，需要如下配置，否则包找不到TokenStore异常
-    @Configuration
-    protected static class RelatedConfiguration {
-        @Bean
-        public TokenStore tokenStore(RedisConnectionFactory connectionFactory) {
-            RedisTokenStore redisTokenStore = new RedisTokenStore(connectionFactory);
-            //EnhanceRedisTokenStore redisTokenStore = new EnhanceRedisTokenStore(connectionFactory);
-            return redisTokenStore;
-        }
-    }
+//    @Configuration
+//    protected static class RelatedConfiguration {
+//        @Bean
+//        public TokenStore tokenStore(RedisConnectionFactory connectionFactory) {
+//            RedisTokenStore redisTokenStore = new RedisTokenStore(connectionFactory);
+//            //EnhanceRedisTokenStore redisTokenStore = new EnhanceRedisTokenStore(connectionFactory);
+//            return redisTokenStore;
+//        }
+//    }
 }

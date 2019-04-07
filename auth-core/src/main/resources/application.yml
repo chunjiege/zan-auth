@@ -21,4 +21,5 @@ security:
 logging:
   level:
     com.zan.hu.auth: debug
-    #org.springframework: debug
+server:
+  port: 8201
