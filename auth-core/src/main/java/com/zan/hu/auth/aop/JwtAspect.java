@@ -1,7 +1,7 @@
 package com.zan.hu.auth.aop;
 
 import com.zan.hu.auth.domain.GlobalUser;
-import com.zan.hu.auth.mapper.GlobalUserMapper;
+import com.zan.hu.auth.dao.mapper.GlobalUserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -30,8 +30,6 @@ public class JwtAspect {
 
     @Autowired
     private GlobalUserMapper globalUserMapper;
-
-    //org.springframework.security.oauth2.provider.endpoint
 
     @Pointcut("execution(* org.springframework.security.oauth2.provider.endpoint.TokenEndpoint.postAccessToken(..))")
     public void pointcut() {

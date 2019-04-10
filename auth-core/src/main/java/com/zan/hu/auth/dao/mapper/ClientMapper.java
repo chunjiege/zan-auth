@@ -1,4 +1,4 @@
-package com.zan.hu.auth.mapper;
+package com.zan.hu.auth.dao.mapper;
 
 import com.zan.hu.auth.domain.Client;
 import tk.mybatis.mapper.common.Mapper;

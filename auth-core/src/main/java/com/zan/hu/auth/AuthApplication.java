@@ -12,7 +12,7 @@ import tk.mybatis.spring.annotation.MapperScan;
  * @Description todo
  **/
 @SpringCloudApplication
-@MapperScan("com.zan.hu.auth.mapper")
+@MapperScan("com.zan.hu.auth.dao.mapper")
 @EnableAspectJAutoProxy
 public class AuthApplication {
     public static void main(String[] args) {

@@ -50,6 +50,12 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
+    @Autowired
+    private DefaultTokenServices defaultTokenServices;
+
+    @Autowired
+    private RedefineTokenGranter redefineTokenGranter;
+
     private SecurityProperties securityProperties;
 
     public AuthorizationServerConfiguration(SecurityProperties securityProperties) {
@@ -70,19 +76,20 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints
-                .tokenStore(tokenStore).tokenEnhancer(jwtAccessTokenConverter())
+                .tokenStore(tokenStore)//.tokenEnhancer(jwtAccessTokenConverter())
+                .tokenGranter(redefineTokenGranter)
                 .authenticationManager(authenticationManager)
                 .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST)
                 .userDetailsService(userDetailsService);
         // 配置tokenServices参数
-        DefaultTokenServices tokenServices = new DefaultTokenServices();
-        tokenServices.setTokenStore(endpoints.getTokenStore());
-        tokenServices.setSupportRefreshToken(true);
-        tokenServices.setClientDetailsService(clientDetailsService);
+//        DefaultTokenServices tokenServices = new DefaultTokenServices();
+//        tokenServices.setTokenStore(endpoints.getTokenStore());
+//        tokenServices.setSupportRefreshToken(true);
+//        tokenServices.setClientDetailsService(clientDetailsService);
         //tokenServices.setClientDetailsService(endpoints.getClientDetailsService());
-        tokenServices.setTokenEnhancer(endpoints.getTokenEnhancer());
+        // tokenServices.setTokenEnhancer(endpoints.getTokenEnhancer());
         //tokenServices.setAccessTokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(30)); // 30天
-        endpoints.tokenServices(tokenServices);
+        endpoints.tokenServices(defaultTokenServices);
     }
 
 
@@ -129,16 +136,4 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     private KeyStoreKeyFactory keyStoreKeyFactory(SecurityProperties.JwtProperties jwtProperties) {
         return new KeyStoreKeyFactory(jwtProperties.getKeyStore(), jwtProperties.getKeyStorePassword().toCharArray());
     }
-
-
-    // @Autowired TokenStore，需要如下配置，否则包找不到TokenStore异常
-//    @Configuration
-//    protected static class RelatedConfiguration {
-//        @Bean
-//        public TokenStore tokenStore(RedisConnectionFactory connectionFactory) {
-//            RedisTokenStore redisTokenStore = new RedisTokenStore(connectionFactory);
-//            //EnhanceRedisTokenStore redisTokenStore = new EnhanceRedisTokenStore(connectionFactory);
-//            return redisTokenStore;
-//        }
-//    }
 }

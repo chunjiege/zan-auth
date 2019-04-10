@@ -1,7 +1,7 @@
 package com.zan.hu.auth.userdetails;
 
 import com.zan.hu.auth.domain.GlobalUser;
-import com.zan.hu.auth.mapper.GlobalUserMapper;
+import com.zan.hu.auth.dao.mapper.GlobalUserMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
