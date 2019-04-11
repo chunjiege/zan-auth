@@ -1,6 +1,7 @@
 package com.zan.hu.auth.oauth;
 
 import com.zan.hu.auth.config.SecurityProperties;
+import com.zan.hu.auth.oauth.client.ClientDetailsServiceImpl;
 import com.zan.hu.auth.userdetails.SysAccount;
 import com.zan.hu.auth.userdetails.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

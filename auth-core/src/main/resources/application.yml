@@ -1,9 +1,4 @@
 spring:
-  datasource:
-    username: root
-    password: 123456
-    url: jdbc:mysql://118.31.20.148:3306/juhai?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&allowMultiQueries=true
-    driver-class-name: com.mysql.cj.jdbc.Driver
   redis:
     host: 118.31.20.148
     port: 6378
@@ -23,3 +18,11 @@ logging:
     com.zan.hu.auth: debug
 server:
   port: 8201
+
+feign:
+  client:
+    config:
+      feignName:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: full

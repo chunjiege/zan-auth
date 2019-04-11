@@ -1,7 +1,7 @@
 package com.zan.hu.auth.userdetails;
 
-import com.zan.hu.auth.domain.GlobalUser;
-import com.zan.hu.auth.dao.mapper.GlobalUserMapper;
+import com.zan.hu.auth.feign.SysFeignClient;
+import com.zan.hu.sys.GlobalUser;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -25,11 +25,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private final String ROLE_USER = "ROLE_USER";
 
     @Autowired
-    private GlobalUserMapper globalUserMapper;
+    private SysFeignClient sysFeignClient;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        GlobalUser globalUser = globalUserMapper.selectByAccount(username);
+        GlobalUser globalUser = sysFeignClient.selectByAccount(username);
         if (globalUser == null) {
             throw new UsernameNotFoundException(username);
         }

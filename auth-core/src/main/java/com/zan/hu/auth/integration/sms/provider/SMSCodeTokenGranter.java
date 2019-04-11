@@ -1,4 +1,4 @@
-package com.zan.hu.auth.provider;
+package com.zan.hu.auth.integration.sms.provider;
 
 import com.zan.hu.auth.config.ApplicationContextUtil;
 import com.zan.hu.auth.service.RedisService;

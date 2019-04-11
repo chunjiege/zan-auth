@@ -1,7 +1,7 @@
-package com.zan.hu.auth.oauth;
+package com.zan.hu.auth.oauth.client;
 
-import com.zan.hu.auth.dao.mapper.ClientMapper;
-import com.zan.hu.auth.domain.Client;
+import com.zan.hu.auth.feign.SysFeignClient;
+import com.zan.hu.sys.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.oauth2.provider.ClientDetails;
@@ -23,11 +23,11 @@ import java.util.Arrays;
 public class ClientDetailsServiceImpl implements ClientDetailsService {
 
     @Autowired
-    private ClientMapper clientMapper;
+    private SysFeignClient sysFeignClient;
 
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
-        Client client = clientMapper.selectByClientId(clientId);
+        Client client = sysFeignClient.selectByClientId(clientId);
         BaseClientDetails clientDetails = new BaseClientDetails();
         clientDetails.setClientId(client.getClientId());
         clientDetails.setClientSecret(client.getClientSecret());

@@ -31,7 +31,7 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
-    public void set(String key, Object value, long time) {
+    public void set(String key, long time, Object value) {
         redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
     }
 
@@ -40,5 +40,34 @@ public class RedisServiceImpl implements RedisService {
         if (key != null && key.length > 0) {
             redisTemplate.delete(CollectionUtils.arrayToList(key));
         }
+    }
+
+    @Override
+    public void add(String key, String value) {
+
+    }
+
+    @Override
+    public void add(String key, long time, Object... values) {
+        redisTemplate.opsForSet().add(key, values);
+        expire(key, time);
+    }
+
+    @Override
+    public void setRemove(String key, String value) {
+
+    }
+
+    @Override
+    public boolean expire(String key, long time) {
+        try {
+            if (time > 0) {
+                redisTemplate.expire(key, time, TimeUnit.SECONDS);
+            }
+            return Boolean.TRUE;
+        } catch (Exception e) {
+
+        }
+        return Boolean.FALSE;
     }
 }

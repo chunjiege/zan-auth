@@ -1,6 +1,6 @@
 package com.zan.hu.auth.userdetails;
 
-import com.zan.hu.auth.domain.GlobalUser;
+import com.zan.hu.sys.GlobalUser;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
