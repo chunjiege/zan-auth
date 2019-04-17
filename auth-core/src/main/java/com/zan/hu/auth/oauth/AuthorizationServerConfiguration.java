@@ -1,5 +1,6 @@
 package com.zan.hu.auth.oauth;
 
+import com.zan.hu.auth.config.CustomerEnhancer;
 import com.zan.hu.auth.config.SecurityProperties;
 import com.zan.hu.auth.oauth.client.ClientDetailsServiceImpl;
 import com.zan.hu.auth.userdetails.SysAccount;
@@ -82,14 +83,6 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 .authenticationManager(authenticationManager)
                 .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST)
                 .userDetailsService(userDetailsService);
-        // 配置tokenServices参数
-//        DefaultTokenServices tokenServices = new DefaultTokenServices();
-//        tokenServices.setTokenStore(endpoints.getTokenStore());
-//        tokenServices.setSupportRefreshToken(true);
-//        tokenServices.setClientDetailsService(clientDetailsService);
-        //tokenServices.setClientDetailsService(endpoints.getClientDetailsService());
-        // tokenServices.setTokenEnhancer(endpoints.getTokenEnhancer());
-        //tokenServices.setAccessTokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(30)); // 30天
         endpoints.tokenServices(defaultTokenServices);
     }
 
@@ -107,34 +100,16 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         KeyStoreKeyFactory keyStoreKeyFactory = keyStoreKeyFactory(securityProperties.getJwt());
         KeyPair keyPair = keyPair(securityProperties.getJwt(), keyStoreKeyFactory);
-        JwtAccessTokenConverter converter = additionalInfo();
+        JwtAccessTokenConverter converter = new CustomerEnhancer();
         converter.setKeyPair(keyPair);
         return converter;
     }
 
-    private JwtAccessTokenConverter additionalInfo() {
-        JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter() {
-            @Override
-            public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
-                String account = authentication.getUserAuthentication().getName();
-                SysAccount sysAccount = (SysAccount) userDetailsService.loadUserByUsername(account);
-                // 得到用户名，去处理数据库可以拿到当前用户的信息和角色信息（需要传递到服务中用到的信息）
-                final Map<String, Object> additionalAccountInfo = new HashMap<>();
-                additionalAccountInfo.put("guid", sysAccount.getUserGuid());
-                additionalAccountInfo.put("id", sysAccount.getId());
-                ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalAccountInfo);
-                OAuth2AccessToken enhancedToken = super.enhance(accessToken, authentication);
-                return enhancedToken;
-            }
-        };
-        return jwtAccessTokenConverter;
-    }
-
-    private KeyPair keyPair(SecurityProperties.JwtProperties jwtProperties, KeyStoreKeyFactory keyStoreKeyFactory) {
+    public static KeyPair keyPair(SecurityProperties.JwtProperties jwtProperties, KeyStoreKeyFactory keyStoreKeyFactory) {
         return keyStoreKeyFactory.getKeyPair(jwtProperties.getKeyPairAlias());
     }
 
-    private KeyStoreKeyFactory keyStoreKeyFactory(SecurityProperties.JwtProperties jwtProperties) {
+    public static KeyStoreKeyFactory keyStoreKeyFactory(SecurityProperties.JwtProperties jwtProperties) {
         return new KeyStoreKeyFactory(jwtProperties.getKeyStore(), jwtProperties.getKeyStorePassword().toCharArray());
     }
 }

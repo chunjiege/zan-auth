@@ -1,5 +1,6 @@
 package com.zan.hu.auth.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -11,8 +12,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class BeanConfig {
 
-//    @Bean
-//    public FakeToken fakeToken()  {
-//        return new FakeToken();
-//    }
+    @Bean
+    public FakeToken fakeToken() {
+        return new FakeToken();
+    }
 }

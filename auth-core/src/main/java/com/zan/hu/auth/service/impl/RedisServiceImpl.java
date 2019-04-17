@@ -43,13 +43,13 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
-    public void add(String key, String value) {
-
+    public void add(String key, Object... values) {
+        redisTemplate.opsForSet().add(key, values);
     }
 
     @Override
     public void add(String key, long time, Object... values) {
-        redisTemplate.opsForSet().add(key, values);
+        add(key, values);
         expire(key, time);
     }
 

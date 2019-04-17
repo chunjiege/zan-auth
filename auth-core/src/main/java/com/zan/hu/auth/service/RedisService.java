@@ -26,7 +26,7 @@ public interface RedisService {
      * set 集合
      */
 
-    void add(String key, String value);
+    void add(String key, Object... values);
 
     void add(String key, long time, Object... values);
 

@@ -20,13 +20,13 @@ public class FeignConfiguration implements RequestInterceptor {
 
     String BLANK_SPACE = " ";
 
-    String token = "";
+    String token = null;
 
     public FeignConfiguration() {
     }
 
-//    @Autowired
-//    private FakeToken fakeToken;
+    @Autowired
+    private FakeToken fakeToken;
 
 
     @Override
@@ -38,9 +38,7 @@ public class FeignConfiguration implements RequestInterceptor {
     }
 
     public String getFakeToken() {
-//        OAuth2AccessToken oAuth2AccessToken = fakeToken.getOAuth2AccessToken();
-//        //return oAuth2AccessToken.getValue();
-//        return token = oAuth2AccessToken.getValue();
-        return null;
+        OAuth2AccessToken oAuth2AccessToken = fakeToken.getOAuth2AccessToken();
+        return token = oAuth2AccessToken.getValue();
     }
 }

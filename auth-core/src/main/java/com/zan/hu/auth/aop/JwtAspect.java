@@ -12,8 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.stereotype.Component;
 
-import java.util.Map;
-
 /**
  * @version 1.0
  * @Author hupeng
@@ -34,6 +32,7 @@ public class JwtAspect {
 
     @Before("pointcut()")
     public void doBefore(JoinPoint joinPoint) throws Throwable {
+        System.out.println(joinPoint);
     }
 
     @AfterReturning(returning = "ret", pointcut = "pointcut()")
