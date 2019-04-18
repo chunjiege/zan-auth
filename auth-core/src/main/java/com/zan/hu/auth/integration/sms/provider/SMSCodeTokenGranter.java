@@ -65,7 +65,7 @@ public class SMSCodeTokenGranter extends AbstractTokenGranter {
         }
         // 验证验证码
         if (StringUtils.isBlank(code)) {
-            throw new InvalidGrantException("验证码为空！");
+            throw new InvalidGrantException("输入验证码为空！");
         }
         boolean validate = Objects.equals(cacheCode, code);
         if (validate) {

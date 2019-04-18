@@ -1,7 +1,7 @@
 package com.zan.hu.auth.oauth.client;
 
 import com.zan.hu.auth.feign.SysFeignClient;
-import com.zan.hu.sys.Client;
+import com.zan.hu.sys.domain.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.oauth2.provider.ClientDetails;

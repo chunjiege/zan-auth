@@ -1,7 +1,7 @@
 package com.zan.hu.auth.feign;
 
-import com.zan.hu.sys.Client;
-import com.zan.hu.sys.GlobalUser;
+import com.zan.hu.sys.domain.Client;
+import com.zan.hu.sys.domain.GlobalUser;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

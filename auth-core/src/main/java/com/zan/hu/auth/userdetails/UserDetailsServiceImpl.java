@@ -1,7 +1,7 @@
 package com.zan.hu.auth.userdetails;
 
 import com.zan.hu.auth.feign.SysFeignClient;
-import com.zan.hu.sys.GlobalUser;
+import com.zan.hu.sys.domain.GlobalUser;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
