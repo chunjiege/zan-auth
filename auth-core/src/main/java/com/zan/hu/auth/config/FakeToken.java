@@ -85,7 +85,7 @@ public class FakeToken {
     public Map<String, String> buildLinkedHashMap() {
         Map<String, String> parameters = new LinkedHashMap<>();
         parameters.put("grant_type", OauthConstant.GRANT_TYPE);
-        parameters.put("username", OauthConstant.ACCOUNT);
+        parameters.put("username", OauthConstant.USERNAME);
         parameters.put("password", OauthConstant.PASSWORD);
         parameters.put("client_id", OauthConstant.CLIENT_ID);
         parameters.put("client_secret", OauthConstant.CLIENT_SECRET);
@@ -116,7 +116,7 @@ public class FakeToken {
     private SysAccount fakeSysAccount() {
         SysAccount sysAccount = new SysAccount();
         sysAccount.setGuid(UUID.randomUUID().toString().replace("-", ""));
-        sysAccount.setAccount(OauthConstant.ACCOUNT);
+        sysAccount.setUsername(OauthConstant.USERNAME);
         sysAccount.setPassword(passwordEncoder.encode(OauthConstant.PASSWORD));
         sysAccount.setLocked(Boolean.TRUE);
         sysAccount.setEnabled(Boolean.TRUE);

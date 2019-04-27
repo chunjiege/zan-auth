@@ -1,7 +1,7 @@
 package com.zan.hu.auth.feign;
 
+import com.zan.hu.sys.domain.Account;
 import com.zan.hu.sys.domain.Client;
-import com.zan.hu.sys.domain.GlobalUser;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(name = "sys-server")
 public interface SysFeignClient {
 
-    @GetMapping("/api/global/account")
-    GlobalUser selectByAccount(@RequestParam("account") String account);
+    @GetMapping("/api/account/username")
+    Account selectByUsername(@RequestParam("username") String username);
 
     @GetMapping("/api/client/clientId")
     Client selectByClientId(@RequestParam("clientId") String clientId);

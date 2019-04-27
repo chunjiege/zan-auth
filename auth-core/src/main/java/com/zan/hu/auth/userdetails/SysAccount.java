@@ -1,6 +1,6 @@
 package com.zan.hu.auth.userdetails;
 
-import com.zan.hu.sys.domain.GlobalUser;
+import com.zan.hu.sys.domain.Account;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,7 +17,7 @@ import java.util.List;
  * 实现Serializable
  **/
 @Data
-public class SysAccount extends GlobalUser implements SysAccountDetails, Serializable {
+public class SysAccount extends Account implements SysAccountDetails, Serializable {
 
     private List<SimpleGrantedAuthority> authorities;
 
@@ -42,7 +42,7 @@ public class SysAccount extends GlobalUser implements SysAccountDetails, Seriali
 
     @Override
     public String getUsername() {
-        return super.getAccount();
+        return super.getUsername();
     }
 
     @Override

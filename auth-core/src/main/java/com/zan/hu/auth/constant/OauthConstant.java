@@ -26,7 +26,7 @@ public interface OauthConstant {
 
     String AUTHORITIES = "ROLE_USER";
 
-    String ACCOUNT = "hupeng";
+    String USERNAME = "hupeng";
 
     String PASSWORD = "hupeng";
 
