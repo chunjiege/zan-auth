@@ -8,7 +8,7 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>auth-test</module>
+        <module>auth-core</module>
     </modules>
 
     <repositories>
@@ -51,7 +51,7 @@
             <dependency>
                 <groupId>com.zan.hup</groupId>
                 <artifactId>common-bom</artifactId>
-                <version>${project.version}</version>
+                <version>1.0-SNAPSHOT</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
