@@ -1,9 +1,9 @@
 package com.zan.hu.auth.integration.sms.provider;
 
 import com.zan.hu.auth.config.ApplicationContextUtil;
-import com.zan.hu.auth.service.RedisService;
-import com.zan.hu.auth.service.impl.RedisServiceImpl;
 import com.zan.hu.auth.userdetails.UserDetailsServiceImpl;
+import com.zan.hu.common.service.RedisService;
+import com.zan.hu.common.service.impl.RedisServiceImpl;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -42,7 +42,7 @@ public class SMSCodeTokenGranter extends AbstractTokenGranter {
     public SMSCodeTokenGranter(AuthorizationServerTokenServices tokenServices, ClientDetailsService clientDetailsService, OAuth2RequestFactory requestFactory) {
         super(tokenServices, clientDetailsService, requestFactory, GRANT_TYPE);
         userDetailsService = (UserDetailsServiceImpl) ApplicationContextUtil.getBean("userDetailsServiceImpl");
-        redisService = (RedisServiceImpl) ApplicationContextUtil.getBean("redisServiceImpl");
+        redisService = (RedisService) ApplicationContextUtil.getBean("redisService");
     }
 
 

@@ -40,7 +40,5 @@ public class JwtAspect {
         ResponseEntity<OAuth2AccessToken> responseEntity = (ResponseEntity<OAuth2AccessToken>) ret;
         OAuth2AccessToken oAuth2AccessToken = responseEntity.getBody();
         redisAsyncTask.setToken(oAuth2AccessToken);
-        // 处理完请求，返回内容
-        log.info("RESPONSE : " + ret);
     }
 }
