@@ -1,9 +1,8 @@
-package com.zan.hu.auth.integration.sms.provider;
+package com.zan.hu.auth.integration.provider.sms;
 
 import com.zan.hu.auth.config.ApplicationContextUtil;
 import com.zan.hu.auth.userdetails.UserDetailsServiceImpl;
-import com.zan.hu.common.service.RedisService;
-import com.zan.hu.common.service.impl.RedisServiceImpl;
+import com.zan.hu.redis.RedisService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

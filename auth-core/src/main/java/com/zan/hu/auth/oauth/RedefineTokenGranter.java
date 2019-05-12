@@ -1,6 +1,6 @@
 package com.zan.hu.auth.oauth;
 
-import com.zan.hu.auth.integration.sms.provider.SMSCodeTokenGranter;
+import com.zan.hu.auth.integration.provider.sms.SMSCodeTokenGranter;
 import com.zan.hu.auth.oauth.client.ClientDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

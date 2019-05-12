@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -48,7 +49,6 @@ public class FakeToken {
     @Autowired
     private SecurityProperties securityProperties;
 
-
     private DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
 
     private DefaultOAuth2RequestFactory defaultOAuth2RequestFactory = new DefaultOAuth2RequestFactory(new fakeClientDetailsService());
@@ -61,7 +61,7 @@ public class FakeToken {
         defaultTokenServices.setTokenEnhancer(update());
         defaultTokenServices.setClientDetailsService(new fakeClientDetailsService());
         TokenRequest tokenRequest = defaultOAuth2RequestFactory.createTokenRequest(buildLinkedHashMap(), buildClientDetails());
-        Authentication userAuth = buildAuthentication(buildClientDetails(), tokenRequest);
+        Authentication userAuth = buildAuthentication(tokenRequest);
         OAuth2Request storedOAuth2Request = defaultOAuth2RequestFactory.createOAuth2Request(buildClientDetails(), tokenRequest);
         OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(storedOAuth2Request, userAuth);
         OAuth2AccessToken accessToken = defaultTokenServices.createAccessToken(oAuth2Authentication);
@@ -100,7 +100,7 @@ public class FakeToken {
         }
     }
 
-    private Authentication buildAuthentication(ClientDetails client, TokenRequest tokenRequest) {
+    private Authentication buildAuthentication(TokenRequest tokenRequest) {
         Map<String, String> parameters = new LinkedHashMap<String, String>(tokenRequest.getRequestParameters());
         String username = parameters.get("username");
         String password = parameters.get("password");

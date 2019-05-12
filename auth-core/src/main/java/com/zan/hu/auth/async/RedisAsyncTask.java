@@ -2,16 +2,15 @@ package com.zan.hu.auth.async;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zan.hu.common.entity.AccessTokenDto;
-import com.zan.hu.common.service.RedisService;
 import com.zan.hu.common.utils.ObjectMapperUtils;
+import com.zan.hu.redis.RedisService;
+import com.zan.hu.redis.entity.AccessTokenDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.Map;
 import java.util.Set;

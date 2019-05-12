@@ -20,9 +20,9 @@ public interface OauthConstant {
 
     String AUTHORIZED_GRANT_TYPES = "authorization_code, password, client_credentials, implicit, refresh_token,sms_code";
 
-    Integer ACCESS_TOKEN_VALIDITY_SECONDS = 120;
+    Integer ACCESS_TOKEN_VALIDITY_SECONDS = 2 * 60;
 
-    Integer REFRESH_TOKEN_VALIDITY_SECONDS = 120;
+    Integer REFRESH_TOKEN_VALIDITY_SECONDS = 2 * 60;
 
     String AUTHORITIES = "ROLE_USER";
 

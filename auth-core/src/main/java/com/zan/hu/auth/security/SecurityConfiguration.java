@@ -46,7 +46,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     /**
      * 33      * Spring Boot 2 配置，这里要bean 注入
-     * 34
      */
     @Bean
     @Primary
