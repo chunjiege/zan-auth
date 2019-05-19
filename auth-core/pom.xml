@@ -11,6 +11,11 @@
 
     <artifactId>auth-core</artifactId>
 
+    <properties>
+        <zan-starter.version>1.0-RELEASE</zan-starter.version>
+        <docker.name>auth-server</docker.name>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.zan.hu</groupId>
@@ -25,7 +30,7 @@
         <dependency>
             <groupId>com.zan.hu</groupId>
             <artifactId>redis-starter</artifactId>
-            <version>${parent.version}</version>
+            <version>${zan-starter.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -60,13 +65,11 @@
         <dependency>
             <groupId>org.springframework.security.oauth.boot</groupId>
             <artifactId>spring-security-oauth2-autoconfigure</artifactId>
-            <version>2.1.2.RELEASE</version>
         </dependency>
         <!--&lt;!&ndash; EnableAuthorizationServer &ndash;&gt;-->
         <dependency>
             <groupId>org.springframework.security.oauth</groupId>
             <artifactId>spring-security-oauth2</artifactId>
-            <version>2.3.5.RELEASE</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -82,17 +85,12 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.56</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
     </dependencies>
-
-    <properties>
-        <docker.name>auth-server</docker.name>
-    </properties>
 
     <build>
         <plugins>
