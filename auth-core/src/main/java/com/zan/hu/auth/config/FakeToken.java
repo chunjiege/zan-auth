@@ -2,7 +2,7 @@ package com.zan.hu.auth.config;
 
 import com.zan.hu.auth.constant.OauthConstant;
 import com.zan.hu.auth.oauth.AuthorizationServerConfiguration;
-import com.zan.hu.auth.userdetails.SysAccount;
+import com.zan.hu.auth.userdetails.CurrentAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -10,7 +10,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -108,21 +107,21 @@ public class FakeToken {
         parameters.remove("password");
         Authentication userAuth = new UsernamePasswordAuthenticationToken(username, password);
         ((AbstractAuthenticationToken) userAuth).setDetails(parameters);
-        SysAccount globalUser = fakeSysAccount();
+        CurrentAccount globalUser = fakeSysAccount();
         Object principal = globalUser;
         return createSuccessAuthentication(principal, userAuth, globalUser);
     }
 
-    private SysAccount fakeSysAccount() {
-        SysAccount sysAccount = new SysAccount();
-        sysAccount.setGuid(UUID.randomUUID().toString().replace("-", ""));
-        sysAccount.setUsername(OauthConstant.USERNAME);
-        sysAccount.setPassword(passwordEncoder.encode(OauthConstant.PASSWORD));
-        sysAccount.setLocked(Boolean.TRUE);
-        sysAccount.setEnabled(Boolean.TRUE);
-        sysAccount.setExpired(Boolean.TRUE);
-        sysAccount.setAuthorities(Arrays.asList(new SimpleGrantedAuthority(OauthConstant.AUTHORITIES)));
-        return sysAccount;
+    private CurrentAccount fakeSysAccount() {
+        CurrentAccount currentAccount = new CurrentAccount();
+        currentAccount.setGuid(UUID.randomUUID().toString().replace("-", ""));
+        currentAccount.setUsername(OauthConstant.USERNAME);
+        currentAccount.setPassword(passwordEncoder.encode(OauthConstant.PASSWORD));
+        currentAccount.setLocked(Boolean.TRUE);
+        currentAccount.setEnabled(Boolean.TRUE);
+        currentAccount.setExpired(Boolean.TRUE);
+        currentAccount.setAuthorities(Arrays.asList(new SimpleGrantedAuthority(OauthConstant.AUTHORITIES)));
+        return currentAccount;
     }
 
     private Authentication createSuccessAuthentication(Object principal, Authentication authentication, UserDetails user) {

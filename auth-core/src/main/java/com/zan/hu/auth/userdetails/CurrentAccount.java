@@ -1,6 +1,6 @@
 package com.zan.hu.auth.userdetails;
 
-import com.zan.hu.sys.domain.Account;
+import com.zan.hu.sys.entity.Account;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,11 +17,11 @@ import java.util.List;
  * 实现Serializable
  **/
 @Data
-public class SysAccount extends Account implements SysAccountDetails, Serializable {
+public class CurrentAccount extends Account implements AccountDetails, Serializable {
 
     private List<SimpleGrantedAuthority> authorities;
 
-    public SysAccount() {
+    public CurrentAccount() {
         super();
     }
 

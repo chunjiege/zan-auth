@@ -1,7 +1,7 @@
 package com.zan.hu.auth.oauth.client;
 
-import com.zan.hu.auth.feign.SysFeignClient;
-import com.zan.hu.sys.domain.Client;
+import com.zan.hu.auth.feign.AccountClient;
+import com.zan.hu.sys.entity.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.oauth2.provider.ClientDetails;
@@ -23,16 +23,16 @@ import java.util.Arrays;
 public class ClientDetailsServiceImpl implements ClientDetailsService {
 
     @Autowired
-    private SysFeignClient sysFeignClient;
+    private AccountClient accountClient;
 
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
-        Client client = sysFeignClient.selectByClientId(clientId);
+        Client client = accountClient.selectByClientId(clientId);
         BaseClientDetails clientDetails = new BaseClientDetails();
         clientDetails.setClientId(client.getClientId());
         clientDetails.setClientSecret(client.getClientSecret());
         clientDetails.setScope(Arrays.asList(StringUtils.tokenizeToStringArray(client.getScope(), ",")));
-        clientDetails.setAutoApproveScopes(Arrays.asList(StringUtils.tokenizeToStringArray(client.getAutoapprove(), ",")));
+        clientDetails.setAutoApproveScopes(Arrays.asList(StringUtils.tokenizeToStringArray(client.getAutoApprove(), ",")));
         clientDetails.setResourceIds(Arrays.asList(StringUtils.tokenizeToStringArray(client.getResourceIds(), ",")));
         clientDetails.setAuthorizedGrantTypes(Arrays.asList(StringUtils.tokenizeToStringArray(client.getAuthorizedGrantTypes(), ", ")));
         clientDetails.setAccessTokenValiditySeconds(client.getAccessTokenValidity());

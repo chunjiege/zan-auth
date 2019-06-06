@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @Date 2019-03-30 23:42
  * @Description todo
  **/
-public interface SysAccountDetails extends UserDetails {
+public interface AccountDetails extends UserDetails {
 
     /**
      * get sys GUID

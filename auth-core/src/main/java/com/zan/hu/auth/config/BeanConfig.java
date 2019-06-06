@@ -16,4 +16,5 @@ public class BeanConfig {
     public FakeToken fakeToken() {
         return new FakeToken();
     }
+
 }

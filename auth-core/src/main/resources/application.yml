@@ -2,6 +2,8 @@ spring:
   redis:
     host: 118.31.20.148
     port: 6378
+  jackson:
+    default-property-inclusion: non_null
 security:
   jwt:
     key-store: classpath:auth-jwt.jks
@@ -22,7 +24,6 @@ feign:
         connectTimeout: 5000
         readTimeout: 5000
         loggerLevel: full
-
 redis:
   basic:
     server:
