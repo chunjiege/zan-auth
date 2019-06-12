@@ -1,20 +1,17 @@
 package com.zan.hu.auth.async;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zan.hu.common.utils.ObjectMapperUtils;
 import com.zan.hu.redis.RedisService;
-import com.zan.hu.redis.entity.AccessTokenDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.oauth2.common.ExpiringOAuth2RefreshToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.common.OAuth2RefreshToken;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  * @version 1.0
@@ -25,27 +22,32 @@ import java.util.concurrent.CopyOnWriteArraySet;
 @Component
 @Slf4j
 public class RedisAsyncTask {
+    private static final String ACCESS_TO_REFRESH = "access_to_refresh:";
 
-    private static Set<String> VALID_TOKEN = new CopyOnWriteArraySet();
+    private static final String REFRESH_TO_ACCESS = "refresh_to_access:";
 
     @Autowired
     private RedisService redisService;
 
+    @Autowired
+    ValueOperations<String, Object> valueOperations;
+
     @Async
-    public void setToken(OAuth2AccessToken oAuth2AccessToken) throws JsonProcessingException {
-        log.info("异步任务正在进行中..........");
-        AccessTokenDto accessTokenDto = new AccessTokenDto();
+    public void storeToken(OAuth2AccessToken oAuth2AccessToken) {
+        log.info("异步任务正在处理中..........");
+        Long accessTokenSeconds = Long.valueOf(oAuth2AccessToken.getExpiresIn());
+        OAuth2RefreshToken refreshToken = oAuth2AccessToken.getRefreshToken();
         Map<String, Object> additionalInformation = oAuth2AccessToken.getAdditionalInformation();
-        String guid = (additionalInformation.get("guid").toString());//guid id
-        String tokenValue = oAuth2AccessToken.getValue();//token
-        Integer expiresIn = oAuth2AccessToken.getExpiresIn();//秒..过期时间
-        accessTokenDto.setAccessToken(tokenValue);
-        accessTokenDto.setExpiresIn(new Date().getTime() + (expiresIn.longValue() * 1000));
-        accessTokenDto.setGuid(guid);
-        ObjectMapper objectMapper = ObjectMapperUtils.newInstance();
-        String accessToken = objectMapper.writeValueAsString(accessTokenDto);
-        log.info("accessToken:" + accessToken);
-        VALID_TOKEN.add(accessToken);
-        redisService.add(tokenValue, VALID_TOKEN);
+        String guid = additionalInformation.get("guid").toString();
+        if (refreshToken instanceof ExpiringOAuth2RefreshToken) {
+            ExpiringOAuth2RefreshToken expiringRefreshToken = (ExpiringOAuth2RefreshToken) refreshToken;
+            Date expiration = expiringRefreshToken.getExpiration();
+            log.info("refresh token time:" + expiration);
+            if (expiration != null) {
+                Long seconds = (expiration.getTime() - System.currentTimeMillis()) / 1000L;
+                redisService.set(REFRESH_TO_ACCESS + guid, seconds, oAuth2AccessToken.getRefreshToken().getValue());
+            }
+        }
+        redisService.set(ACCESS_TO_REFRESH + guid, accessTokenSeconds, oAuth2AccessToken.getValue());
     }
 }

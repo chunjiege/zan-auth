@@ -32,13 +32,13 @@ public class JwtAspect {
 
     @Before("pointcut()")
     public void doBefore(JoinPoint joinPoint) throws Throwable {
-        System.out.println(joinPoint);
+
     }
 
     @AfterReturning(returning = "ret", pointcut = "pointcut()")
     public void doAfterReturning(Object ret) throws Throwable {
         ResponseEntity<OAuth2AccessToken> responseEntity = (ResponseEntity<OAuth2AccessToken>) ret;
         OAuth2AccessToken oAuth2AccessToken = responseEntity.getBody();
-        redisAsyncTask.setToken(oAuth2AccessToken);
+        redisAsyncTask.storeToken(oAuth2AccessToken);
     }
 }

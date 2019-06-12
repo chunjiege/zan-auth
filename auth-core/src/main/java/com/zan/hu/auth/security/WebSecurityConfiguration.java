@@ -21,7 +21,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  **/
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+//@Order(90)
+public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
     @Autowired
@@ -40,6 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/oauth/*").permitAll()
+                //.anyRequest().authenticated()
                 .and()
                 .csrf().disable();
     }

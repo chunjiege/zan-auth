@@ -12,7 +12,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
  * @version 1.0
  * @Author hupeng
  * @Date 2019-04-01 19:06
- * @Description todo
+ * @Description 启动类
  **/
 @SpringCloudApplication
 @EnableAspectJAutoProxy

@@ -37,8 +37,8 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Autowired
     AuthenticationManager authenticationManager;
 
-    @Autowired
-    private TokenStore tokenStore;
+//    @Autowired
+//    private TokenStore tokenStore;
 
     @Autowired
     private ClientDetailsServiceImpl clientDetailsService;
@@ -72,10 +72,10 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints
-                .tokenStore(tokenStore)//.tokenEnhancer(jwtAccessTokenConverter())
+                .tokenStore(tokenStore())//.tokenEnhancer(jwtAccessTokenConverter())
                 .tokenGranter(redefineTokenGranter)
                 .authenticationManager(authenticationManager)
-                .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST, HttpMethod.DELETE)
+                .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST)
                 .userDetailsService(userDetailsService);
         endpoints.tokenServices(defaultTokenServices);
     }

@@ -27,7 +27,7 @@ import java.util.Objects;
  * @version 1.0
  * @Author hupeng
  * @Date 2019-04-08 20:56
- * @Description todo
+ * @Description 验证码登录
  **/
 public class SMSCodeTokenGranter extends AbstractTokenGranter {
 
@@ -60,6 +60,7 @@ public class SMSCodeTokenGranter extends AbstractTokenGranter {
         //从缓存中查询code
         String cacheCode = redisService.get(username).toString();
         if (StringUtils.isEmpty(cacheCode)) {
+            //todo 去数据库查找验证码，若为空，不为空
             throw new InvalidGrantException("验证码已经过期！");
         }
         // 验证验证码
