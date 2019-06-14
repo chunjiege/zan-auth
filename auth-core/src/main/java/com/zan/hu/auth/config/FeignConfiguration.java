@@ -39,10 +39,9 @@ public class FeignConfiguration implements RequestInterceptor {
         if (oAuth2AccessToken == null || new Date(new Date().getTime() + (oAuth2AccessToken.getExpiresIn() * 1000)).before(new Date()) || StringUtils.isEmpty(oAuth2AccessToken.getValue())) {
             getFakeToken();
         }
-        if (oAuth2AccessToken != null) {
-            template.header("Authorization", BEARER_TYPE + BLANK_SPACE + oAuth2AccessToken.getValue());
-            log.info("请求uri:" + template.url() + ";请求方法:" + template.method());
-        }
+        template.header("Authorization", BEARER_TYPE + BLANK_SPACE + oAuth2AccessToken.getValue());
+        template.header("from", "from");
+        log.info("请求uri:" + template.url() + ";请求方法:" + template.method());
     }
 
     public void getFakeToken() {
