@@ -12,30 +12,21 @@
     <artifactId>auth-core</artifactId>
 
     <properties>
-        <zan-starter.version>1.0-RELEASE</zan-starter.version>
         <docker.name>auth-server</docker.name>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.zan.hu</groupId>
-            <artifactId>sys-model</artifactId>
-            <version>${parent.version}</version>
+            <artifactId>account-model</artifactId>
         </dependency>
         <dependency>
             <groupId>com.zan.hu</groupId>
             <artifactId>user-model</artifactId>
-            <version>${parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.zan.hu</groupId>
-            <artifactId>common-core</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.zan.hu</groupId>
             <artifactId>redis-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

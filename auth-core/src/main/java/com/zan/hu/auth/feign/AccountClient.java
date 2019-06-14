@@ -1,7 +1,7 @@
 package com.zan.hu.auth.feign;
 
-import com.zan.hu.sys.entity.Account;
-import com.zan.hu.sys.entity.Client;
+import com.zan.hu.account.entity.Account;
+import com.zan.hu.account.entity.Client;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  * @Date 2019-04-10 14:45
  * @Description todo
  **/
-@FeignClient(name = "sys-server")
+@FeignClient(name = "account-server")
 public interface AccountClient {
 
     @GetMapping("/api/account/{username}")

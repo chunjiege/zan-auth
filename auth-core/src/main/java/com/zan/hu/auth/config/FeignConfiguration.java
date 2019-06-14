@@ -40,6 +40,7 @@ public class FeignConfiguration implements RequestInterceptor {
             getFakeToken();
         }
         if (oAuth2AccessToken != null) {
+            System.out.println(oAuth2AccessToken.getValue());
             template.header("Authorization", BEARER_TYPE + BLANK_SPACE + oAuth2AccessToken.getValue());
             log.info("请求uri:" + template.url() + ";请求方法:" + template.method());
         }

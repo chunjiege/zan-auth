@@ -16,7 +16,7 @@ public interface OauthConstant {
 
     String AUTO_APPROVE_SCOPES = ".*";
 
-    String RESOURCE_IDS = "sys-server";
+    String RESOURCE_IDS = "account-server";
 
     String AUTHORIZED_GRANT_TYPES = "authorization_code, password, client_credentials, implicit, refresh_token,sms_code";
 
