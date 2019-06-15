@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AuthenticationSuccessHandleHandle extends AbstractAuthenticationSuccessEventHandle {
     @Override
-    public void handle(Authentication authentication) {
-        log.info("用户：{} 登录成功", authentication.getPrincipal());
+    public void handle(Authentication authentication) { 
+        log.info("用户：{} 登录成功",authentication.getPrincipal());
     }
 }
