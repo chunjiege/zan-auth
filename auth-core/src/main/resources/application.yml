@@ -1,0 +1,33 @@
+spring:
+  redis:
+    host: 118.31.20.148
+    port: 6378
+  jackson:
+    default-property-inclusion: non_null
+security:
+  jwt:
+    key-store: classpath:auth-jwt.jks
+    key-store-password: followme
+    key-pair-alias: auth-jwt
+    key-pair-password: followme
+
+logging:
+  level:
+    com.zan.hu.auth: debug
+server:
+  port: 8201
+
+feign:
+  client:
+    config:
+      feignName:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: full
+  request:
+    interceptor:
+      enable: false
+redis:
+  basic:
+    server:
+      enable: true

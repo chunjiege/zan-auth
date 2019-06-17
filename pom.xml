@@ -8,7 +8,7 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>auth-test</module>
+        <module>auth-core</module>
     </modules>
 
     <repositories>
@@ -42,7 +42,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.6</version>
         </dependency>
     </dependencies>
 
@@ -50,8 +49,8 @@
         <dependencies>
             <dependency>
                 <groupId>com.zan.hup</groupId>
-                <artifactId>common-bom</artifactId>
-                <version>${project.version}</version>
+                <artifactId>zan-bom</artifactId>
+                <version>1.0-SNAPSHOT</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
