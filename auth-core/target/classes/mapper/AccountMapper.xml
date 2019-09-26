@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zan.hu.auth.mapper.AccountMapper">
+    <resultMap id="BaseResultMap" type="com.zan.hu.auth.Account">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="guid" jdbcType="VARCHAR" property="guid"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="locked" jdbcType="BIT" property="locked"/>
+        <result column="enabled" jdbcType="BIT" property="enabled"/>
+        <result column="expired" jdbcType="BIT" property="expired"/>
+        <result column="created" jdbcType="TIMESTAMP" property="created"/>
+        <result column="updated" jdbcType="TIMESTAMP" property="updated"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, guid,username, `password`, locked, enabled, expired, created,
+    updated
+  </sql>
+
+    <insert id="insertBatchXml" parameterType="java.util.List">
+        insert into account (guid,username, password)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.guid},
+            #{item.username},
+            #{item.password})
+        </foreach>
+    </insert>
+
+    <select id="selectByUsername" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from account
+        where username = #{username}
+    </select>
+</mapper>

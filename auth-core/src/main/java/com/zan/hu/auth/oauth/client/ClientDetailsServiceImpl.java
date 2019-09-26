@@ -1,7 +1,7 @@
 package com.zan.hu.auth.oauth.client;
 
-import com.zan.hu.account.entity.Client;
-import com.zan.hu.auth.feign.AccountClient;
+import com.zan.hu.auth.Client;
+import com.zan.hu.auth.mapper.ClientMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.oauth2.provider.ClientDetails;
@@ -23,11 +23,11 @@ import java.util.Arrays;
 public class ClientDetailsServiceImpl implements ClientDetailsService {
 
     @Autowired
-    private AccountClient accountClient;
+    private ClientMapper clientMapper;
 
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
-        Client client = accountClient.selectByClientId(clientId);
+        Client client = clientMapper.selectByClientId(clientId);
         BaseClientDetails clientDetails = new BaseClientDetails();
         clientDetails.setClientId(client.getClientId());
         clientDetails.setClientSecret(client.getClientSecret());

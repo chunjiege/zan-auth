@@ -58,7 +58,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         this.securityProperties = securityProperties;
     }
 
-    @Bean
+    @Bean(name = "tokenStore1")
     public TokenStore tokenStore() {
         return new JwtTokenStore(jwtAccessTokenConverter());
     }

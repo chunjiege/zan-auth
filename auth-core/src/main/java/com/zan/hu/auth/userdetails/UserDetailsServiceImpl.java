@@ -1,7 +1,7 @@
 package com.zan.hu.auth.userdetails;
 
-import com.zan.hu.account.entity.Account;
-import com.zan.hu.auth.feign.AccountClient;
+import com.zan.hu.auth.Account;
+import com.zan.hu.auth.mapper.AccountMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -25,11 +25,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private final String ROLE_USER = "ROLE_USER";
 
     @Autowired
-    private AccountClient accountClient;
+    private AccountMapper accountMapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Account account = accountClient.selectByUsername(username);
+        Account account = accountMapper.selectByUsername(username);
         if (account == null) {
             throw new UsernameNotFoundException(username);
         }

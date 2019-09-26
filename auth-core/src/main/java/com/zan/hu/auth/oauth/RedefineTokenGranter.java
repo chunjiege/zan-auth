@@ -3,6 +3,7 @@ package com.zan.hu.auth.oauth;
 import com.zan.hu.auth.integration.provider.sms.SMSCodeTokenGranter;
 import com.zan.hu.auth.oauth.client.ClientDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -45,6 +46,7 @@ public class RedefineTokenGranter implements TokenGranter {
     private ClientDetailsServiceImpl clientDetailsService;
 
     @Autowired
+    @Qualifier("tokenStore1")
     private TokenStore tokenStore;
 
     @Autowired

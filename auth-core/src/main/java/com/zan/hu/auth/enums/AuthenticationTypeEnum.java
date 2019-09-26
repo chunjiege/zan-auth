@@ -1,4 +1,4 @@
-package com.zan.hu.auth.constant;
+package com.zan.hu.auth.enums;
 
 import lombok.Getter;
 
